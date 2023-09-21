@@ -1,12 +1,15 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const db = require("./config/mysql");
+const conn = db.init();
 
 //유저가 보낸 object, array데이터 출력해보기 위함.
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //다른 도메인 주소끼리 ajax요청 가능하게함.
-let cors = require('cors');
+const cors = require('cors');
 app.use(cors());
 
 
