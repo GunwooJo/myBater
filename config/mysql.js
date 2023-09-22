@@ -5,7 +5,7 @@ let dbInfo = {
   port: "3306", // 데이터베이스 포트
   user: "gunwoo", // 로그인 계정
   password: "gunwoo1234", // 비밀번호
-  database: "LETSMySQL", // 엑세스할 데이터베이스
+  database: "lets", // 엑세스할 데이터베이스
 };
 
 module.exports = {
