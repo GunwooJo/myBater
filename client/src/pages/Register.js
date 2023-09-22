@@ -5,17 +5,30 @@ import { useNavigate } from 'react-router-dom';
 
 function Register() {
   
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
-  const [location, setLocation] = useState('');
+  const [region, setRegion] = useState('');
 
   const navigate = useNavigate();
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // TODO: Handle actual registration logic here
+    try {
+      await axios.post('/user/register', {
+        id: id,
+        pw: pw,
+        nickname: nickname,
+        email: email,
+        region: region
+      })
+      alert('회원가입 성공');
+      navigate('/');
+    } catch (e) {
+      console.log(e)
+    }
     
   }
 
@@ -25,23 +38,23 @@ function Register() {
       <form onSubmit={handleSubmit}>
 
         <div className="input-group">
-          <label htmlFor="userId">아이디</label>
+          <label htmlFor="id">아이디</label>
           <input
             type="text"
-            id="userId"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
+            id="id"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
             required
           />
         </div>
 
         <div className="input-group">
-          <label htmlFor="password">비밀번호</label>
+          <label htmlFor="pw">비밀번호</label>
           <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="pw"
+            id="pw"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
             required
           />
         </div>
@@ -69,11 +82,11 @@ function Register() {
         </div>
 
         <div className="input-group">
-          <label htmlFor="location">거래 희망 지역</label>
+          <label htmlFor="region">거래 희망 지역</label>
           <select 
-            id="location" 
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            id="region" 
+            value={region}
+            onChange={(e) => setRegion(e.target.value)}
             required
           >
             <option value="">지역 선택</option>
