@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const db = require("./config/mysql");
-const conn = db.init();
 
 //유저가 보낸 object, array데이터 출력해보기 위함.
 app.use(express.json());

@@ -51,7 +51,7 @@ function Register() {
         <div className="input-group">
           <label htmlFor="pw">비밀번호</label>
           <input
-            type="pw"
+            type="password"
             id="pw"
             value={pw}
             onChange={(e) => setPw(e.target.value)}

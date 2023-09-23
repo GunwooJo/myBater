@@ -9,14 +9,6 @@ let dbInfo = {
   database: "lets", // 엑세스할 데이터베이스
 };
 
-module.exports = {
-  init: function () {
-    return mysql.createConnection(dbInfo);
-  },
-  connect: function (conn) {
-    conn.connect(function (err) {
-      if (err) console.error("mysql connection error : " + err);
-      else console.log("mysql is connected successfully!");
-    });
-  },
-};
+let dbConnection = mysql.createConnection(dbInfo);
+
+module.exports = dbConnection;
