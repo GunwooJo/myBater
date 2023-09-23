@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 const cors = require('cors');
 app.use(cors());
 
-
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('/', function (request, response) {
@@ -23,24 +22,12 @@ app.listen(8080, function () {
   console.log('listening on 8080')
 }); 
 
+const userRouter = require('./routes/user');
+
+app.use('/user', userRouter);
+
+
 //이 코드는 반드시 가장 하단에 놓여야 함. 고객에 URL란에 아무거나 입력하면 index.html(리액트 프로젝트 빌드파일)을 전해달란 의미.
 app.get('*', function (request, response) {
   response.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
-
-app.post('/user/register', (req, res)=>{
-  let body = {...req.body}
-  let sql = 'INSERT INTO user(id,pw,nickname,email,region) VALUES(?,?,?,?,?)'
-  let params = [body.id, body.pw, body.nickname, body.email, body.region]
-
-  conn.query(sql, params, (error)=>{
-    if(error) {
-      console.log('쿼리 실행 안됨: '+ error);
-      res.sendStatus(500);
-    }
-    else {
-      res.sendStatus(200)
-    }
-
-  })
-})
