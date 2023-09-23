@@ -4,16 +4,23 @@ import '../styles/login.css';
 
 function Login() {
   
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
 
   const navigate = useNavigate();
 
   //로그인 버튼 눌렀을 때 벌어질 이벤트
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-   
+    try {
+      await axios.post('/user/login', {
+        id: id,
+        pw: pw
+      });
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
@@ -21,24 +28,24 @@ function Login() {
       <h2>로그인</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-          <label htmlFor="userId">아이디</label>
+          <label htmlFor="id">아이디</label>
           <input
             type="text"
-            id="userId"
-            value={userId}
+            id="id"
+            value={id}
             maxLength={30}
-            onChange={(e) => setUserId(e.target.value)}
+            onChange={(e) => setId(e.target.value)}
             required
           />
         </div>
         <div className="input-group">
-        <label htmlFor="password">비밀번호</label>
+        <label htmlFor="pw">비밀번호</label>
           <input
             type="password"
-            id="password"
-            value={password}
+            id="pw"
+            value={pw}
             maxLength={30}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPw(e.target.value)}
             required
           />
         </div>
