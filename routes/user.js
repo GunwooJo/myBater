@@ -3,6 +3,7 @@ const router = express.Router();
 const dbConnection = require("../config/mysql");
 const bcrypt = require('bcrypt');
 
+//회원가입 요청 처리
 router.post('/register', async (req, res)=>{
   try {
     let body = {...req.body}
@@ -34,6 +35,7 @@ router.post('/register', async (req, res)=>{
   dbConnection.end();
 })
 
+//로그인 요청 처리
 router.post('/login', async (req, res)=>{
   try {
     const body = {...req.body};

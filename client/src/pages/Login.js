@@ -15,12 +15,23 @@ function Login() {
     e.preventDefault();
 
     try {
-      await axios.post('/user/login', {
+      const response = await axios.post('/user/login', {
         id: id,
         pw: pw
       });
+
+      if(response.status === 200) {
+        alert('로그인 성공!');
+        navigate('/');
+      }
+
     } catch (error) {
-      console.log(error)
+      // Handle different HTTP status codes here, for example:
+      if (error.response && error.response.status === 401) {
+        alert('아이디와 비밀번호를 다시 확인해주세요.');
+      } else {
+        alert('오류 발생. 잠시 후 다시 시도해주세요.');
+      }
     }
   };
 
