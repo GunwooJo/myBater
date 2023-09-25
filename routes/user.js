@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../config/mysql");
 const bcrypt = require('bcrypt');
+const userController = require('../controllers/userController');
 
 //회원가입 요청 처리
 router.post('/register', async (req, res)=>{
@@ -35,44 +36,6 @@ router.post('/register', async (req, res)=>{
   }
 })
 
-//로그인 요청 처리
-router.post('/login', async (req, res)=>{
-  try {
-    const body = {...req.body};
-
-    let sql = 'SELECT * FROM user WHERE id = ?';
-    let params = [body.id];
-
-    pool.getConnection((error, connection)=>{
-      connection.query(sql, params, (error, result)=>{
-        if(error) {
-          console.error('Error executing the query: '+ error.stack);
-          res.sendStatus(500);
-        }
-        else {
-          const user = result[0];
-          
-          //If user not found or password does not match, send error response
-          if(!user || !bcrypt.compareSync(body.pw, user.pw)) {
-            return res.status(401).json({ error: 'Invalid username or password' });
-          }
-  
-          // Here you would typically create a token or a session and send it to the client
-          // For simplicity, we're just sending a success message
-          res.json({ message: 'Login successful!' });
-          console.log('로그인 성공');
-        }
-  
-      })
-    })
-    
-    
-  } catch (error) {
-    console.error('Error handling login request:', error.stack);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-  
-})
-
+router.post('/login', userController.loginUser);
 
 module.exports = router;
