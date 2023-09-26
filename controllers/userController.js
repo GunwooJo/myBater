@@ -17,8 +17,7 @@ exports.loginUser = (req, res) => {
 
       // Here you would typically create a token or a session and send it to the client
       // For simplicity, we're just sending a success message
-      res.json({ message: 'Login successful!' });
-      console.log('로그인 성공');
+      res.status(200).json({ message: 'Login successful!' });
     }
   });
 }

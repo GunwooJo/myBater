@@ -24,13 +24,26 @@ function Login() {
         alert('로그인 성공!');
         navigate('/');
       }
+      else {
+        alert('로그인에 실패했습니다. 다시 시도해주세요.');
+      }
 
     } catch (error) {
-      // Handle different HTTP status codes here, for example:
-      if (error.response && error.response.status === 401) {
+      console.log(error);
+      
+      if (error.response.status === 401) {
+        
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+
         alert('아이디와 비밀번호를 다시 확인해주세요.');
+      } else if (error.request) {
+        // The request was made but no response was received
+        alert('로그인 실패: 서버로부터 응답이 없습니다.');
       } else {
-        alert('오류 발생. 잠시 후 다시 시도해주세요.');
+        // Something happened in setting up the request that triggered an Error
+        alert('회원가입 실패: 알 수 없는 오류가 발생했습니다.');
       }
     }
   };

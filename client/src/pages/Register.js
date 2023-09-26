@@ -17,17 +17,41 @@ function Register() {
     e.preventDefault();
     // TODO: Handle actual registration logic here
     try {
-      await axios.post('/user/register', {
+      const response = await axios.post('/user/register', {
         id: id,
         pw: pw,
         nickname: nickname,
         email: email,
         region: region
-      })
-      alert('회원가입 성공');
-      navigate('/');
-    } catch (e) {
-      console.log(e)
+      });
+
+      if(response.status === 200) {
+        alert('회원가입 성공');
+        navigate('/');
+      }
+      
+    } catch (error) {
+      console.log(error)
+
+      if(error.response) {
+        // The request was made and the server responded with a status code that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+
+        alert('회원가입에 실패했습니다. 재시도 부탁드립니다.');
+      }
+      else if(error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        alert('회원가입 실패: 서버로부터 응답이 없습니다.');
+      }
+      else {
+        // Something happened in setting up the request that triggered an Error
+        alert('회원가입 실패: 알 수 없는 오류가 발생했습니다.');
+      }
+    
+
     }
     
   }
