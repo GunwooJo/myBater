@@ -21,3 +21,25 @@ exports.loginUser = (req, res) => {
     }
   });
 }
+
+exports.registerUser = async (req, res) => {
+  try {
+    let body = {...req.body};
+
+    // Salt and hash the password
+    const saltRounds = 10; // the cost of processing the data
+    const hashedPassword = await bcrypt.hash(body.pw, saltRounds);
+
+    User.saveUser(body.id, hashedPassword, body.nickname, body.email, body.region, (error)=>{
+      if(error) {
+        res.status(500).json({error: 'db저장 실패'});
+      }
+      else {
+        res.status(200).json({message: '회원정보 저장 성공.'});
+      }
+    })
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
